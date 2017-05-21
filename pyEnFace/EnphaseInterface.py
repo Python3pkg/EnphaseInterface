@@ -138,7 +138,7 @@ class DateTimeType(Enum):
                 logging.error('The value for start_date is after end_date')
                 raise ValueError('start_date is after end_date')
 
-        for k,v in query.items():
+        for k,v in list(query.items()):
             if '_at' in k or '_date' in k:
                 if v > dt.datetime.now():
                     logging.error('The value for %s is set to the future' % k)
@@ -193,7 +193,7 @@ class RawEnphaseInterface(object):
 
     def _filterAttributes(self,attrs,kwargs):
         globalAttrs = ('datetime_format','callback','user_id','key')
-        valids = [ (k,v) for k,v in kwargs.items() if k in attrs+globalAttrs ]
+        valids = [ (k,v) for k,v in list(kwargs.items()) if k in attrs+globalAttrs ]
         return dict(valids)
 
     def setDateTimeType(self, dtt):
@@ -462,7 +462,7 @@ class CachingEnphaseInterface(PandasEnphaseInterface):
                             [obs_type] TEXT)'''
 
         with self.engine.connect() as con:
-            for k,v in t.items():
+            for k,v in list(t.items()):
                 if not self.engine.has_table(k):
                     con.execute(v)
 

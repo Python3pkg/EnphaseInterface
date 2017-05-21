@@ -8,10 +8,10 @@ import logging
 
 from lxml import etree as et
 
-import EnphaseInterface as ei
+from . import EnphaseInterface as ei
 
 def parseEnergy(data):
-    for k,v in data.items():
+    for k,v in list(data.items()):
         if v[-3:] == 'MWh' or v[-2:] == 'MW':
             data[k] = int(float(v.split()[0])*(10**6))
         elif v[-3:] == 'kWh' or v[-2:] == 'kW':
